@@ -1,0 +1,16 @@
+{
+  "name": "@nado-hot-bridge/shield-contract",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "HOT Pay Shield — Trustless escrow smart contract for NEAR",
+  "scripts": {
+    "build": "near-sdk-js build src/escrow.ts build/escrow.wasm",
+    "build:debug": "near-sdk-js build src/escrow.ts build/escrow.wasm --verbose true"
+  },
+  "dependencies": {
+    "near-sdk-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

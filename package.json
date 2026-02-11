@@ -1,0 +1,16 @@
+{
+  "name": "nado-hot-bridge",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "HOT Pay Shield — Trustless escrow for HOT Pay payments. NEARCON 2026 Innovation Sandbox.",
+  "workspaces": [
+    "packages/*",
+    "demo"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w demo",
+    "build": "npm run build -w packages/hot-connector && npm run build -w demo",
+    "build:connector": "npm run build -w packages/hot-connector"
+  }
+}
