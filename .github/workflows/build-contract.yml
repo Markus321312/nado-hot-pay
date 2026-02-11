@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'packages/shield-contract/**'
+      - '.github/workflows/build-contract.yml'
   workflow_dispatch:
 
 jobs:
@@ -16,15 +17,22 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install dependencies
+      - name: Install and build contract
         run: |
-          cd packages/shield-contract
-          npm install
+          # Build in isolated temp dir to avoid monorepo hoisting issues
+          mkdir -p /tmp/shield-build
+          cp packages/shield-contract/package.json /tmp/shield-build/
+          cp packages/shield-contract/tsconfig.json /tmp/shield-build/
+          mkdir -p /tmp/shield-build/src
+          cp packages/shield-contract/src/escrow.ts /tmp/shield-build/src/
 
-      - name: Build WASM
-        run: |
-          cd packages/shield-contract
+          cd /tmp/shield-build
+          npm install
           npx near-sdk-js build src/escrow.ts build/escrow.wasm
+
+          # Copy artifact back
+          mkdir -p $GITHUB_WORKSPACE/packages/shield-contract/build
+          cp build/escrow.wasm $GITHUB_WORKSPACE/packages/shield-contract/build/
 
       - name: Upload WASM artifact
         uses: actions/upload-artifact@v4
