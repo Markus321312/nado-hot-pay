@@ -11,7 +11,7 @@ import {
 // 1 yoctoNEAR for ft_transfer security
 const ONE_YOCTO = BigInt("1");
 // 100 TGas for ft_transfer cross-contract call
-const FT_TRANSFER_GAS = BigInt("50_000_000_000_000");
+const FT_TRANSFER_GAS = BigInt("50000000000000");
 
 type EscrowStatus =
   | "funded"
@@ -85,7 +85,7 @@ class ShieldEscrow {
 
     const timeoutMinutes = parsed.timeout_minutes || 1440; // default 24h
     const nowNs = near.blockTimestamp();
-    const timeoutNs = nowNs + BigInt(timeoutMinutes) * BigInt(60) * BigInt(1_000_000_000);
+    const timeoutNs = nowNs + BigInt(timeoutMinutes) * BigInt(60) * BigInt(1000000000);
 
     const escrowId = `escrow_${this.escrow_count}`;
     const escrow: Escrow = {
